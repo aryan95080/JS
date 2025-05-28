@@ -1,0 +1,11 @@
+#wrapper{
+    background-color:ghostwhite;
+    color: black;
+    width: 40vw;
+    justify-items: center;
+    margin: auto ;
+    margin-top: 20vh;
+    padding: 30px;
+    border-radius: 20px;
+
+}
