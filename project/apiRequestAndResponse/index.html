@@ -1,36 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body style="background-color:red; color: white;">
-0	UNSENT	Client has been created. open() not called yet.
-1	OPENED	open() has been called.
-2	HEADERS_RECEIVED	send() has been called, and headers and status are available.
-3	LOADING	Downloading; responseText holds partial data.
-4	DONE	The operation is complete.
-    
-</body>
-<script>
-    const reqUrl='https://api.github.com/users/aryan95080'
-    const xhr=new XMLHttpRequest()
-    xhr.open('GET',reqUrl)
+  </head>
+  <body style="background-color: whitesmoke; color: black">
+    <div
+      style="width: 90vw; background: rgb(255, 2, 255,.7); margin: auto; border-radius: 10px"
+    >
+      <div style="display: flex;justify-content:space-evenly;align-items: center;gap:10%;">
+        <img
+          style="width:25vh; border-radius: 50%; margin:20px;border: 1px solid black;"
+          src=""
+          alt="GitHub Profile Image"
+          id="profile_image"
+        />
+        <div>
+            <ul style="display: flex;gap: 50px;font-size:medium;font:bold;font-weight: 700;list-style-type: none;text-align: center;">
+                <li>Followers <br><span>5M</span></li>
+                <li>Following <br><span>1574</span></li>
+            </ul>
+        </div>
+        <div style="justify-items: center;margin-right: 10vw">
+          <h1 id="users_name">
+            Loading name...
+          </h1>
+          <p style="text-align:center;" id="bio">Loading bio...</p>
+        </div>
+      </div>
+    </div>
+    <hr />
+    <div>
+      0 UNSENT – Client has been created. open() not called yet. <br />
+      <hr />
+      1 OPENED – open() has been called.<br />
+      <hr />
+      2 HEADERS_RECEIVED – send() has been called, and headers and status are
+      available.<br />
+      <hr />
+      3 LOADING – Downloading; responseText holds partial data.<br />
+      <hr />
+      4 DONE – The operation is complete.<br />
+      <hr />
+    </div>
+  </body>
+  <script>
+    const reqUrl = "https://api.github.com/users/aryan95080";
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", reqUrl);
     // console.log("Hello Aryan")
+    xhr.onreadystatechange = function () {
+      console.log(xhr.readyState);
+      if (xhr.readyState === 4) {
+        //const data=(this.responseText);
+        const data = JSON.parse(this.responseText);
+        console.log(typeof data);
+        console.log(data);
+        console.log(data.login);
+        console.log(data.name);
+        console.log(data.bio);
+        document.getElementById("profile_image").src = data.avatar_url;
+        document.getElementById("users_name").innerHTML = data.name;
+        document.getElementById("bio").innerHTML = data.bio;
 
-    xhr.onreadystatechange=function(){
-        console.log(xhr.readyState)
-        if(xhr.readyState===4){
-            const data=JSON.parse(this.responseText);
-            // console.log(data)
-            console.log(typeof data)
-            console.log(data.following)
+        //     if (xhr.status === 200) {
+        //             const data = JSON.parse(this.responseText);
+        //             console.log(data);
 
-        }
-    }
-    xhr.send()
-
-
-</script>
+        //             document.getElementById('profile_image').src = data.avatar_url;
+        //             document.getElementById('users_name').innerHTML = data.name || data.login;
+        //             document.getElementById('bio').innerHTML = data.bio || "No bio available.";
+        //         } else {
+        //             document.getElementById('users_name').innerHTML = "Failed to load user.";
+        //             document.getElementById('bio').innerHTML = "Error: " + xhr.status;
+        //         }
+      }
+    };
+    xhr.send();
+  </script>
 </html>
